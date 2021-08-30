@@ -14,6 +14,7 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// 保留vue实力的$mount 方法
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
@@ -30,6 +31,7 @@ Vue.prototype.$mount = function (
   }
 
   const options = this.$options
+  // 把模板渲染成 render 函数
   // resolve template/el and convert to render function
   if (!options.render) {
     let template = options.template

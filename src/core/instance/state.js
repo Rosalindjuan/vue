@@ -149,6 +149,7 @@ function initData (vm: Component) {
     }
   }
   // observe data
+  // 响应书处理 入口
   observe(data, true /* asRootData */)
 }
 
