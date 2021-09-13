@@ -32,7 +32,7 @@ export function normalizeChildren (children: any): ?Array<VNode> {
   return isPrimitive(children)
     ? [createTextVNode(children)]
     : Array.isArray(children)
-      ? normalizeArrayChildren(children)
+      ? normalizeArrayChildren(children) // 将数组处理成一维数组，避免多层数组嵌套问题
       : undefined
 }
 

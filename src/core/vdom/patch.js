@@ -122,6 +122,7 @@ export function createPatchFunction (backend) {
 
   let creatingElmInVPre = 0
 
+  // 
   function createElm (
     vnode,
     insertedVnodeQueue,
@@ -748,6 +749,7 @@ export function createPatchFunction (backend) {
         const parentElm = nodeOps.parentNode(oldElm)
 
         // create new node
+        // 创建dom节点
         createElm(
           vnode,
           insertedVnodeQueue,
