@@ -5,11 +5,14 @@ import { detectErrors } from './error-detector'
 import { createCompileToFunctionFn } from './to-function'
 
 export function createCompilerCreator (baseCompile: Function): Function {
+  // baseOptions 平台相关的options
+  // src/platforms/web/compiler/options.js 中定义
   return function createCompiler (baseOptions: CompilerOptions) {
     function compile (
       template: string,
-      options?: CompilerOptions
+      options?: CompilerOptions // 用户传过来的 options
     ): CompiledResult {
+      // 合并 baseOptions 和 options
       const finalOptions = Object.create(baseOptions)
       const errors = []
       const tips = []
@@ -18,6 +21,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
         (tip ? tips : errors).push(msg)
       }
 
+      // 有 options 就合并 options
       if (options) {
         if (process.env.NODE_ENV !== 'production' && options.outputSourceRange) {
           // $flow-disable-line
@@ -58,6 +62,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
 
       finalOptions.warn = warn
 
+      // baseCompile 模板编译的核心函数
       const compiled = baseCompile(template.trim(), finalOptions)
       if (process.env.NODE_ENV !== 'production') {
         detectErrors(compiled.ast, warn)
@@ -66,10 +71,10 @@ export function createCompilerCreator (baseCompile: Function): Function {
       compiled.tips = tips
       return compiled
     }
-
+    // compile方法的核心作用是：合并选项（options），调用baseCompile 进行编译，记录错误，返回编译好的对象
     return {
       compile,
-      compileToFunctions: createCompileToFunctionFn(compile)
+      compileToFunctions: createCompileToFunctionFn(compile) // 入口函数
     }
   }
 }
