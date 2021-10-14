@@ -78,6 +78,7 @@ export default class Watcher {
       : ''
     // parse expression for getter
     if (typeof expOrFn === 'function') {
+      // 渲染Watcher中 this.getter 就是 updateComponent
       this.getter = expOrFn
     } else {
       // expOrFn 是字符串的时候，例如 watch: {'person.name': function...}

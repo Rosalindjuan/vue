@@ -171,6 +171,7 @@ export function mountComponent (
 
   let updateComponent
   /* istanbul ignore if */
+  // 启用性能监测相关的代码 可忽略
   if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
     updateComponent = () => {
       const name = vm._name
@@ -190,6 +191,9 @@ export function mountComponent (
     }
   } else {
     updateComponent = () => {
+      // 重要
+      // vm._render() 调用render方法或者模板编译后的render方法，并返回虚拟dom
+      // vm._update 会将虚拟dom转换成真实dom
       vm._update(vm._render(), hydrating)
     }
   }
@@ -197,6 +201,7 @@ export function mountComponent (
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
+  // updateComponent的执行在 Watcher中执行
   new Watcher(vm, updateComponent, noop, {
     before () {
       if (vm._isMounted && !vm._isDestroyed) {

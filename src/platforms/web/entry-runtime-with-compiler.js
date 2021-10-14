@@ -16,6 +16,7 @@ const idToTemplate = cached(id => {
 
 // 保留vue实例的$mount 方法
 const mount = Vue.prototype.$mount
+// 又重写了 runtime 里面的$mount方法，并增加了 compile 方法
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
@@ -48,8 +49,10 @@ Vue.prototype.$mount = function (
             )
           }
         }
+        console.log(111, template)
       } else if (template.nodeType) {
         template = template.innerHTML
+        console.log(222,template);
       } else {
         if (process.env.NODE_ENV !== 'production') {
           warn('invalid template option:' + template, this)
@@ -57,8 +60,9 @@ Vue.prototype.$mount = function (
         return this
       }
     } else if (el) {
-      // 如果没有 template 获取el的 outerHTML 作为模板
+      // 如果没有 template,获取el的 outerHTML 作为模板
       template = getOuterHTML(el)
+      console.log(333, template);
     }
     if (template) {
       /* istanbul ignore if */

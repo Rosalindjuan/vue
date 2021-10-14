@@ -30,13 +30,19 @@ Vue.config.isUnknownElement = isUnknownElement
 
 // install platform runtime directives & components
 // 平台相关的组件与指令
+// 可查看到增加model，show
 extend(Vue.options.directives, platformDirectives)
+// 增加components中增加 Transition、ransitionGroup
 extend(Vue.options.components, platformComponents)
 
+// __patch__ 把虚拟dom转换成真实DOM
+// 这里只是先注册，未执行，init方法中执行
 // install platform patch function
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
+// $mount 是把dom挂载到界面中去
+// 这里只是先注册，未执行，init方法中执行
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
