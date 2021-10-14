@@ -20,6 +20,7 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
+  // 获取 DOM 对象
   el = el && query(el)
 
   /* istanbul ignore if */
@@ -82,6 +83,7 @@ Vue.prototype.$mount = function (
       }
     }
   }
+  // mount 方法就是为了渲染DOM
   return mount.call(this, el, hydrating)
 }
 
